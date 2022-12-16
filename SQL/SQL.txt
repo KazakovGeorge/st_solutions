@@ -1,0 +1,25 @@
+1) Даны таблицы [Orders] и [Customers], вывести все заказы и имена клиентов их совершивших, из городов Германии. Вывести колонки: Номер заказа, Дата заказа, Имя клиента, Город.
+
+SELECT Orders.OrderID, Orders.OrderDate, Customers.CustomerName, Customers.City 
+FROM Customers 
+INNER JOIN Orders 
+ON Customers.CustomerID = Orders.CustomerID;
+
+
+2) Даны таблицы [Orders] и [Customers]. Найти заказчиков, не сделавших ни одного заказа. Вывести имя заказчика.
+
+SELECT Customers.CustomerName
+FROM Customers 
+LEFT JOIN Orders 
+ON Customers.CustomerID = Orders.CustomerID
+WHERE Orders.OrderID IS NULL;
+
+3)Вывести все страны в которых было совершено более 5 заказов. Вывести колонки: Страна, Город, Количество заказов. Отсортировать результат по Количеству заказов (по убыванию) и Стране (Aa-Zz)
+
+SELECT Customers.Country, Customers.City, COUNT(Orders.OrderID)
+FROM Customers
+INNER JOIN Orders
+ON Customers.CustomerID = Orders.CustomerID
+GROUP BY Customers.City
+HAVING(COUNT(Orders.OrderID)) > 5
+ORDER BY COUNT(Orders.OrderID);
